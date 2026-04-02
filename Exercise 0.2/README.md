@@ -62,3 +62,11 @@ energy-webpage-v1
 │
 ├── index.html
 └── README.md
+
+
+
+Generative AI Usage Declaration
+
+This project incorporates the use of Generative Artificial Intelligence (AI) tools, specifically ChatGPT, to assist in development. The AI tool was used for brainstorming ideas, generating code suggestions, and explaining technical concepts related to HTML, CSS, and JavaScript.
+
+All AI-generated content has been carefully reviewed, edited, and adapted to meet the project requirements. The final work reflects my own understanding and implementation. The use of AI complies with academic integrity guidelines, and no content has been copied without modification or comprehension.
