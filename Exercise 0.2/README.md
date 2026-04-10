@@ -67,6 +67,39 @@ energy-webpage-v1
 
 Generative AI Usage Declaration
 
-This project incorporates the use of Generative Artificial Intelligence (AI) tools, specifically ChatGPT, to assist in development. The AI tool was used for brainstorming ideas, generating code suggestions, and explaining technical concepts related to HTML, CSS, and JavaScript.
+Introduction: I used AI to support my workflow by helping structure and draft a clear reflection on how AI contributed to this coding task.
 
-All AI-generated content has been carefully reviewed, edited, and adapted to meet the project requirements. The final work reflects my own understanding and implementation. The use of AI complies with academic integrity guidelines, and no content has been copied without modification or comprehension.
+Tool GitHub Copilot in VS Code: an AI-assisted development tool that suggests text and code in context.
+Usage Details:
+-Prompts Used: "Make an simple interative code that allows transition between three pages with Javascript included."
+-Outputs Received:  <!-- Main Content -->
+    <main class="container">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <h1>Energy Consumption in Australia</h1>
+            <p>Welcome to our energy consumption tracker. Discover how much power your household appliances use.</p>
+        </section>
+
+        <!-- Televisions Page -->
+        <section id="televisions" class="page">
+            <h1>Television Energy Consumption</h1>
+            <p>Explore the energy usage of popular television models in the Australian market.</p>
+
+        </section>
+        <!-- About Us Page -->
+        <section id="about" class="page">
+            <h1>About Us</h1>
+            <p>This website is part of the COS30045 Data Visualisation course assignment.</p>
+            <div class="content-box">
+                <h2>Our Mission</h2>
+                <p>To educate Australians about appliance energy consumption and promote sustainable living practices through data visualisation and accessible information.</p>
+            </div>
+        </section>
+    </main>
+
+
+-Modifications Made: I refined the wording for clarity and removed any generic or irrelevant parts. I adjusted the response to state that the AI-generated content is not entirely original and to acknowledge assistance properly.
+
+Reflection: Utilizing AI has help me in making a more compacted code, and assisted me in finding certain lines of code that may cause contradictions and errors
+
+Acknowledgment: I acknowledge that Generative AI is used in the making of this code. 
