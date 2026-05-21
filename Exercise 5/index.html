@@ -19,6 +19,7 @@
                 <li><a href="#" class="nav-link" data-page="televisions">Televisions</a></li>
                 <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
                 <li><a href="#" class="nav-link" data-page="research">Research</a></li>
+                <li><a href="#" class="nav-link" data-page="charts">Charts</a></li>
             </ul>
         </div>
     </nav>
@@ -71,7 +72,30 @@
             </div>
         </section>
 
-        
+        <!-- Charts Page -->
+        <section id="charts" class="page">
+            <h1>D3 Charts Dashboard</h1>
+            <p>TV power consumption</p>
+            <div class="content-box">
+                <div class="chart-row">
+                    <div id="scatterPlot" class="chart-container">
+                        <h3>Scatter: Energy consumption vs Star rating</h3>
+                    </div>
+                    <div id="donutChart" class="chart-container">
+                        <h3>Donut: Energy consumption by screen technology (all sizes)</h3>
+                    </div>
+                </div>
+                <div class="chart-row">
+                    <div id="bar55Chart" class="chart-container">
+                        <h3>Bar: Energy consumption by screen technology (55 inch)</h3>
+                    </div>
+                    <div id="lineChart" class="chart-container">
+                        <h3>Line: Average spot power prices (1998–2024)</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Research Page -->
         <section id="research" class="page">
             <h1>Data research</h1>
@@ -120,6 +144,6 @@
     </footer>
 
     <script src="js/scripts.js"></script>
-    <script src="chart.js"></script>
+    <script type="module" src="js/chart.js"></script>
 </body>
 </html>
