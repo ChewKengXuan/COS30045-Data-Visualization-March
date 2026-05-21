@@ -1,103 +1,47 @@
-export function renderLine(data) {
-  const container = d3.select('#lineChart');
-  const containerNode = container.node();
-  if (!containerNode) return;
+const lineMargin = { top: 20, right: 40, bottom: 50, left: 60 };
+const lineWidth = 500 - lineMargin.left - lineMargin.right;
+const lineHeight = 300 - lineMargin.top - lineMargin.bottom;
 
-  const width = containerNode.clientWidth - 20;
-  const height = 380;
-  const margin = { top: 20, right: 20, bottom: 60, left: 70 };
+// Bind strictly to #lineChart
+const lineSvg = d3.select("#lineChart")
+    .append("svg")
+    .attr("width", lineWidth + lineMargin.left + lineMargin.right)
+    .attr("height", lineHeight + lineMargin.top + lineMargin.bottom)
+    .append("g")
+    .attr("transform", `translate(${lineMargin.left}, ${lineMargin.top})`);
 
-  // Clear previous SVG
-  container.selectAll('svg').remove();
+d3.csv("data/Ex5_ARE_Spot_Prices.csv").then(data => {
+    const targetKey = "Average Price (notTas-Snowy)";
+    
+    data.forEach(d => {
+        d.Year = +d.Year;
+        d.Price = d[targetKey] === "" || d[targetKey] === undefined ? null : +d[targetKey];
+    });
 
-  const svg = container.append('svg')
-    .attr('width', width)
-    .attr('height', height);
+    const xScale = d3.scaleLinear()
+        .domain(d3.extent(data, d => d.Year))
+        .range([0, lineWidth]);
 
-  // Parse data - use average price
-  const parsed = data
-    .map(d => ({
-      year: +d.Year,
-      avg: +d['Average Price (notTas-Snowy)']
-    }))
-    .filter(d => !isNaN(d.avg) && d.avg > 0);
+    const yScale = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.Price) * 1.1])
+        .range([lineHeight, 0]);
 
-  if (parsed.length === 0) {
-    container.append('p').text('No valid data to display');
-    return;
-  }
+    const lineGenerator = d3.line()
+        .defined(d => d.Price !== null && !isNaN(d.Price))
+        .x(d => xScale(d.Year))
+        .y(d => yScale(d.Price));
 
-  const x = d3.scaleLinear()
-    .domain(d3.extent(parsed, d => d.year))
-    .range([margin.left, width - margin.right]);
+    lineSvg.append("g")
+        .attr("transform", `translate(0, ${lineHeight})`)
+        .call(d3.axisBottom(xScale).tickFormat(d3.format("d")));
 
-  const y = d3.scaleLinear()
-    .domain([0, d3.max(parsed, d => d.avg)]).nice()
-    .range([height - margin.bottom, margin.top]);
+    lineSvg.append("g")
+        .call(d3.axisLeft(yScale));
 
-  // X Axis
-  svg.append('g')
-    .attr('transform', `translate(0,${height - margin.bottom})`)
-    .call(d3.axisBottom(x).ticks(6).tickFormat(d3.format('d')))
-    .append('text')
-    .attr('x', width / 2)
-    .attr('y', 45)
-    .attr('fill', '#555')
-    .attr('text-anchor', 'middle')
-    .text('Year');
-
-  // Y Axis
-  svg.append('g')
-    .attr('transform', `translate(${margin.left},0)`)
-    .call(d3.axisLeft(y))
-    .append('text')
-    .attr('transform', 'rotate(-90)')
-    .attr('x', -(height / 2))
-    .attr('y', -50)
-    .attr('fill', '#555')
-    .attr('text-anchor', 'middle')
-    .text('Price ($/MWh)');
-
-  // Line function
-  const line = d3.line()
-    .x(d => x(d.year))
-    .y(d => y(d.avg));
-
-  // Line path
-  svg.append('path')
-    .datum(parsed)
-    .attr('fill', 'none')
-    .attr('stroke', '#2c3e50')
-    .attr('stroke-width', 2.5)
-    .attr('d', line);
-
-  // Tooltip
-  const tooltip = d3.select('body').append('div')
-    .attr('class', 'd3-tooltip-line')
-    .style('position', 'absolute')
-    .style('background', 'rgba(0,0,0,0.8)')
-    .style('color', '#fff')
-    .style('padding', '6px 10px')
-    .style('border-radius', '4px')
-    .style('font-size', '12px')
-    .style('pointer-events', 'none')
-    .style('display', 'none');
-
-  // Points
-  svg.selectAll('circle')
-    .data(parsed)
-    .join('circle')
-    .attr('cx', d => x(d.year))
-    .attr('cy', d => y(d.avg))
-    .attr('r', 3.5)
-    .attr('fill', '#2c3e50')
-    .on('mouseenter', (event, d) => {
-      tooltip.style('display', 'block')
-        .html(`<strong>${d.year}</strong><br/>Average: $${d.avg.toFixed(2)}/MWh`);
-    })
-    .on('mousemove', (event) => {
-      tooltip.style('left', (event.pageX + 10) + 'px')
-        .style('top', (event.pageY + 10) + 'px');
-    })
-    .on('mouseleave', () => tooltip.style('display', 'none'));
-}
+    lineSvg.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "#e15759")
+        .attr("stroke-width", 3)
+        .attr("d", lineGenerator);
+}).catch(err => console.error("Line chart data error:", err));

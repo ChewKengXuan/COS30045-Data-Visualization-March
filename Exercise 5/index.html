@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Energy Consumption - Australian Appliances</title>
     <link rel="stylesheet" href="css/styles.css">
-    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -76,25 +75,24 @@
         <section id="charts" class="page">
             <h1>D3 Charts Dashboard</h1>
             <p>TV power consumption</p>
-            <div class="content-box">
-                <div class="chart-row">
-                    <div id="scatterPlot" class="chart-container">
-                        <h3>Scatter: Energy consumption vs Star rating</h3>
-                    </div>
-                    <div id="donutChart" class="chart-container">
-                        <h3>Donut: Energy consumption by screen technology (all sizes)</h3>
-                    </div>
+            <div class="content-box"class="chart-row">
+                <div id="scatterPlot" class="chart-container">
+                    <h3>Scatter: Energy consumption vs Star rating</h3>
                 </div>
-                <div class="chart-row">
-                    <div id="bar55Chart" class="chart-container">
-                        <h3>Bar: Energy consumption by screen technology (55 inch)</h3>
-                    </div>
-                    <div id="lineChart" class="chart-container">
-                        <h3>Line: Average spot power prices (1998–2024)</h3>
-                    </div>
+                <div id="donutChart" class="chart-container">
+                    <h3>Donut: Energy consumption by screen technology (all sizes)</h3>
                 </div>
             </div>
-        </section>
+            <div class="chart-row">
+                <div id="bar55Chart" class="chart-container">
+                    <h3>Bar: Energy consumption by screen technology (55 inch)</h3>
+                </div>
+                <div id="lineChart" class="chart-container">
+                    <h3>Line: Average spot power prices (1998–2024)</h3>
+                </div>
+            </div>
+        </div>
+    </section>
 
         <!-- Research Page -->
         <section id="research" class="page">
@@ -144,6 +142,10 @@
     </footer>
 
     <script src="js/scripts.js"></script>
-    <script type="module" src="js/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="js/scatter-plot.js"></script>
+    <script src="js/donut-chart.js"></script>
+    <script src="js/bar-chart.js"></script>
+    <script src="js/line-chart.js"></script>
 </body>
 </html>

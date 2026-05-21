@@ -1,79 +1,46 @@
-export function renderDonut(data) {
-  const container = d3.select('#donutChart');
-  const containerNode = container.node();
-  if (!containerNode) return;
+const donutWidth = 450;
+const donutHeight = 300;
+const radius = Math.min(donutWidth, donutHeight) / 2 - 20;
 
-  const width = containerNode.clientWidth;
-  const height = 380;
-  const radius = Math.min(width, height) / 2 - 40;
+// Bind strictly to #donutChart
+const donutSvg = d3.select("#donutChart")
+    .append("svg")
+    .attr("width", donutWidth)
+    .attr("height", donutHeight)
+    .append("g")
+    .attr("transform", `translate(${donutWidth / 2}, ${donutHeight / 2})`);
 
-  // Clear previous SVG
-  container.selectAll('svg').remove();
+d3.csv("data/Ex5_TV_energy_Allsizes_byScreenType.csv").then(data => {
+    // Target exact string format key matching CSV header literal
+    const valKey = "Mean(Labelled energy consumption (kWh/year))";
+    data.forEach(d => d.value = +d[valKey]);
 
-  const svg = container.append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    .append('g')
-    .attr('transform', `translate(${width / 2},${height / 2})`);
+    const colorScale = d3.scaleOrdinal(d3.schemePastel1).domain(data.map(d => d.Screen_Tech));
+    const pieGenerator = d3.pie().value(d => d.value).sort(null);
+    
+    const arcGenerator = d3.arc()
+        .innerRadius(radius * 0.55)
+        .outerRadius(radius)
+        .padAngle(0.03);
 
-  // Parse data
-  const parsed = data.map(d => ({
-    tech: d['Screen_Tech'],
-    value: +d['Mean(Labelled energy consumption (kWh/year))']
-  }));
+    const labelArc = d3.arc().innerRadius(radius * 0.75).outerRadius(radius * 0.75);
 
-  const color = d3.scaleOrdinal()
-    .domain(parsed.map(d => d.tech))
-    .range(['#3498db', '#e74c3c', '#2ecc71']);
+    const arcs = donutSvg.selectAll(".arc")
+        .data(pieGenerator(data))
+        .enter()
+        .append("g")
+        .attr("class", "arc");
 
-  const pie = d3.pie().value(d => d.value)(parsed);
-  const arc = d3.arc().innerRadius(radius * 0.55).outerRadius(radius);
+    arcs.append("path")
+        .attr("d", arcGenerator)
+        .attr("fill", d => colorScale(d.data.Screen_Tech))
+        .attr("stroke", "#fff")
+        .style("stroke-width", "2px");
 
-  // Tooltip
-  const tooltip = d3.select('body').append('div')
-    .attr('class', 'd3-tooltip-donut')
-    .style('position', 'absolute')
-    .style('background', 'rgba(0,0,0,0.8)')
-    .style('color', '#fff')
-    .style('padding', '6px 10px')
-    .style('border-radius', '4px')
-    .style('font-size', '12px')
-    .style('pointer-events', 'none')
-    .style('display', 'none');
-
-  // Slices
-  svg.selectAll('path')
-    .data(pie)
-    .join('path')
-    .attr('d', arc)
-    .attr('fill', d => color(d.data.tech))
-    .attr('stroke', '#fff')
-    .attr('stroke-width', 2)
-    .on('mouseenter', (event, d) => {
-      tooltip.style('display', 'block')
-        .html(`<strong>${d.data.tech}</strong><br/>${d.data.value.toFixed(1)} kWh/yr<br/>Percentage: ${(d.data.value / d3.sum(parsed, p => p.value) * 100).toFixed(1)}%`);
-    })
-    .on('mousemove', (event) => {
-      tooltip.style('left', (event.pageX + 10) + 'px')
-        .style('top', (event.pageY + 10) + 'px');
-    })
-    .on('mouseleave', () => tooltip.style('display', 'none'));
-
-  // Legend
-  const legend = svg.append('g')
-    .attr('transform', `translate(${-(width / 2) + 20},${-(height / 2) + 20})`);
-
-  parsed.forEach((d, i) => {
-    const g = legend.append('g').attr('transform', `translate(0, ${i * 20})`);
-    g.append('rect')
-      .attr('width', 14)
-      .attr('height', 14)
-      .attr('fill', color(d.tech));
-    g.append('text')
-      .attr('x', 18)
-      .attr('y', 11)
-      .attr('font-size', '13px')
-      .attr('fill', '#333')
-      .text(d.tech);
-  });
-}
+    arcs.append("text")
+        .attr("transform", d => `translate(${labelArc.centroid(d)})`)
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .style("font-size", "12px")
+        .text(d => d.data.Screen_Tech);
+}).catch(err => console.error("Donut chart data error:", err));

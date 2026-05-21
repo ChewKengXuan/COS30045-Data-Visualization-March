@@ -1,85 +1,58 @@
-export function renderBar55(data) {
-  const container = d3.select('#bar55Chart');
-  const containerNode = container.node();
-  if (!containerNode) return;
+const barMargin = { top: 20, right: 30, bottom: 50, left: 60 };
+const barWidth = 500 - barMargin.left - barMargin.right;
+const barHeight = 300 - barMargin.top - barMargin.bottom;
 
-  const width = containerNode.clientWidth - 20;
-  const height = 380;
-  const margin = { top: 20, right: 20, bottom: 60, left: 70 };
+// Bind strictly to #bar55Chart
+const barSvg = d3.select("#bar55Chart")
+    .append("svg")
+    .attr("width", barWidth + barMargin.left + barMargin.right)
+    .attr("height", barHeight + barMargin.top + barMargin.bottom)
+    .append("g")
+    .attr("transform", `translate(${barMargin.left}, ${barMargin.top})`);
 
-  // Clear previous SVG
-  container.selectAll('svg').remove();
+d3.csv("data/Ex5_TV_energy_55inchtv_byScreenType.csv").then(data => {
+    const valKey = "Mean(Labelled energy consumption (kWh/year))";
+    data.forEach(d => d.value = +d[valKey]);
 
-  const svg = container.append('svg')
-    .attr('width', width)
-    .attr('height', height);
+    // Enforce sorting layout order execution
+    data.sort((a, b) => b.value - a.value);
 
-  // Parse data
-  const parsed = data.map(d => ({
-    tech: d['Screen_Tech'],
-    value: +d['Mean(Labelled energy consumption (kWh/year))']
-  }));
+    const xScale = d3.scaleBand()
+        .domain(data.map(d => d.Screen_Tech))
+        .range([0, barWidth])
+        .padding(0.4);
 
-  const x = d3.scaleBand()
-    .domain(parsed.map(d => d.tech))
-    .range([margin.left, width - margin.right])
-    .padding(0.4);
+    const yScale = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.value) * 1.1])
+        .range([barHeight, 0]);
 
-  const y = d3.scaleLinear()
-    .domain([0, d3.max(parsed, d => d.value)]).nice()
-    .range([height - margin.bottom, margin.top]);
+    barSvg.append("g")
+        .attr("transform", `translate(0, ${barHeight})`)
+        .call(d3.axisBottom(xScale));
 
-  // X Axis
-  svg.append('g')
-    .attr('transform', `translate(0,${height - margin.bottom})`)
-    .call(d3.axisBottom(x))
-    .append('text')
-    .attr('x', width / 2)
-    .attr('y', 45)
-    .attr('fill', '#555')
-    .attr('text-anchor', 'middle')
-    .text('Screen Technology');
+    barSvg.append("g")
+        .call(d3.axisLeft(yScale));
 
-  // Y Axis
-  svg.append('g')
-    .attr('transform', `translate(${margin.left},0)`)
-    .call(d3.axisLeft(y))
-    .append('text')
-    .attr('transform', 'rotate(-90)')
-    .attr('x', -(height / 2))
-    .attr('y', -50)
-    .attr('fill', '#555')
-    .attr('text-anchor', 'middle')
-    .text('Energy (kWh/year)');
+    barSvg.selectAll(".bar")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", d => xScale(d.Screen_Tech))
+        .attr("y", d => yScale(d.value))
+        .attr("width", xScale.bandwidth())
+        .attr("height", d => barHeight - yScale(d.value))
+        .attr("fill", "#4e79a7")
+        .attr("rx", 2);
 
-  // Tooltip
-  const tooltip = d3.select('body').append('div')
-    .attr('class', 'd3-tooltip-bar')
-    .style('position', 'absolute')
-    .style('background', 'rgba(0,0,0,0.8)')
-    .style('color', '#fff')
-    .style('padding', '6px 10px')
-    .style('border-radius', '4px')
-    .style('font-size', '12px')
-    .style('pointer-events', 'none')
-    .style('display', 'none');
-
-  // Bars
-  svg.selectAll('rect')
-    .data(parsed)
-    .join('rect')
-    .attr('x', d => x(d.tech))
-    .attr('y', d => y(d.value))
-    .attr('width', x.bandwidth())
-    .attr('height', d => height - margin.bottom - y(d.value))
-    .attr('fill', '#3498db')
-    .on('mouseenter', (event, d) => {
-      tooltip.style('display', 'block')
-        .html(`<strong>${d.tech}</strong><br/>${d.value.toFixed(1)} kWh/yr`);
-    })
-    .on('mousemove', (event) => {
-      tooltip.style('left', (event.pageX + 10) + 'px')
-        .style('top', (event.pageY + 10) + 'px');
-    })
-    .on('mouseleave', () => tooltip.style('display', 'none'));
-}
+    barSvg.selectAll(".label")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", d => xScale(d.Screen_Tech) + xScale.bandwidth() / 2)
+        .attr("y", d => yScale(d.value) - 6)
+        .attr("text-anchor", "middle")
+        .style("font-size", "11px")
+        .style("font-weight", "bold")
+        .text(d => `${Math.round(d.value)}`);
+}).catch(err => console.error("Bar chart data error:", err));
