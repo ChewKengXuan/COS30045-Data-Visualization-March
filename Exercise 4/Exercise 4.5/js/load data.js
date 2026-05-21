@@ -11,11 +11,6 @@ d3.csv("data/new data.csv", d => {
   console.log(d3.max(data, d => d.count));
   console.log(d3.min(data, d => d.count));
   console.log(d3.extent(data, d => d.count)); //=> array with min and max
-
-  if (typeof createBarChart === 'function') {
-    createBarChart(data);
-  } else {
-    console.warn('createBarChart not available yet');
-  }
+  data.sort((a, b) => b.count - a.count);
+  createBarChart(data);
 });
-

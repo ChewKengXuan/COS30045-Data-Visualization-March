@@ -63,3 +63,6 @@ Before starting, review:
 5. Commit and push your changes regularly to GitHub.
 
 Your forked repository will serve as your **submission record**.
+
+## AI declaration
+AI was used for automatically duplicate similar commands and toubleshooting errors

@@ -1,0 +1,33 @@
+/* Responsive container of the svg element */
+.responsive-svg-container {
+    width: 100%;
+    max-width: 1000px;
+}
+@media screen and (max-width: 596px) {
+    .responsive-svg-container {
+        margin-bottom: 20px;
+    }
+}
+
+.axis-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    fill:#5a3e2b;
+}
+
+button.filter, button.filter-size {
+    background-color: #d46a24; /* Orange background */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button.filter.active, button.filter-size.active {
+    background-color: #f7ca84; /* Light orange for active state */
+    color: #d46a24;
+}

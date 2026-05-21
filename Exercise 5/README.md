@@ -51,3 +51,6 @@ Ensure that:
 - All Exercise 5 files are inside the **Exercise 5 folder**
 - Your code is pushed to GitHub
 - Your repository link is submitted through the submission system.
+
+## AI Declaration
+AI was used for troubleshooting errors of code that caused D3 to not work as intended.
