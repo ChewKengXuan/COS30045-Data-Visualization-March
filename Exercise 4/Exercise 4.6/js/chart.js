@@ -14,6 +14,11 @@ svg
      return `bar bar-${d.count}`;
     })
 }
+const xScale = d3.scaleLinear()
+  .domain([0, 1310])
+  .range([0, 500]);
 
-
+const yScale = d3.scaleBand()
+ .domain(data.map(d => d.brand))
+ .range([0, 500]);
 window.createBarChart = createBarChart;
