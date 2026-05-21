@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Consumption - Australian Appliances</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo" id="logoHome">
+                <img src="images/PowerIcon.png" alt="Power Logo" class="logo-img">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-page="televisions">Televisions</a></li>
+                <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
+                <li><a href="#" class="nav-link" data-page="data">Research</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <h1>Energy Consumption in Australia</h1>
+            <p>Welcome to our energy consumption tracker. Discover how much power your household appliances use.</p>
+            <div class="content-box">
+                <h2>Did You Know?</h2>
+                <p>The average Australian household consumes approximately 17-18 kWh per day. Understanding appliance energy usage is key to reducing your carbon footprint and saving on electricity bills.</p>
+            </div>
+        </section>
+
+        <!-- Televisions Page -->
+        <section id="televisions" class="page">
+            <h1>Television Energy Consumption</h1>
+            <p>Explore the energy usage of popular television models in the Australian market.</p>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h3>LED TV (55")</h3>
+                    <p><strong>Power Consumption:</strong> 80-100W</p>
+                    <p><strong>Daily Usage:</strong> 4 hours</p>
+                    <p><strong>Monthly Cost:</strong> $8-12 AUD</p>
+                </div>
+                <div class="data-card">
+                    <h3>OLED TV (65")</h3>
+                    <p><strong>Power Consumption:</strong> 100-150W</p>
+                    <p><strong>Daily Usage:</strong> 4 hours</p>
+                    <p><strong>Monthly Cost:</strong> $12-18 AUD</p>
+                </div>
+                <div class="data-card">
+                    <h3>4K Smart TV (75")</h3>
+                    <p><strong>Power Consumption:</strong> 150-200W</p>
+                    <p><strong>Daily Usage:</strong> 5 hours</p>
+                    <p><strong>Monthly Cost:</strong> $20-28 AUD</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Page -->
+        <section id="about" class="page">
+            <h1>About Us</h1>
+            <p>This website is part of the COS30045 Data Visualisation course assignment.</p>
+            <div class="content-box">
+                <h2>Our Mission</h2>
+                <p>To educate Australians about appliance energy consumption and promote sustainable living practices through data visualisation and accessible information.</p>
+            </div>
+        </section>
+
+        
+        <!-- Data Page -->
+        <section id="data" class="page">
+            <h1>Data research</h1>
+            <div class="content-box">
+                <h2>What is a good TV model?</h2>
+                <div class="content-box">
+                    <h3>Problem:</h3>
+                    <p>How can we balance picture quality with energy efficiency when choosing a television?</p>
+                </div>
+                <div class="content-box">
+                    <h3>Graph:</h3>
+                    <p>The chart below will show what screen technology consumes the least amount of energy. According to the data, LCD TVs are the most energy-efficient option. While OLED TVs offer superior picture quality, they tend to consume more power.</p>
+                </div>
+            </div>
+            <div class="content-box">
+                <img src="images/Bar Chart.png" alt="Bar Chart">
+            </div>
+            <div class="content-box">
+                    <h3>Recommendation:</h3>
+                    <p>For the best balance of picture quality and energy efficiency, consider an LCD TV.</p>
+            </div>
+            <div class="content-box">
+                <h2>What's Popular?</h2>
+                <div class="content-box">
+                    <h3>Problem:</h3>
+                    <p>What are the most popular television models in the current market?</p>
+                </div>
+                <div class="content-box">
+                    <h3>Graph:</h3>
+                    <p>The chart below shows the 5 most popular television models in the current market. Out of all the existing brands KOGAN is the most easily assesible TV brand.</p>
+                </div>  
+            </div>
+            <div class="content-box">
+                <img src="images/Bar Chart 2.png" alt="Bar Chart">
+            </div>
+            <div class="content-box">
+                <h3>Recommendation:</h3>
+                <p>For the most popular and accessible television models, consider brands like KOGAN.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Energy Consumption Tracker | Made by Chew Keng Xuan | GenAI Disclosure: Code structure and styling assisted by Claude Haiku</p>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+    <script src="chart.js"></script>
+</body>
+</html>

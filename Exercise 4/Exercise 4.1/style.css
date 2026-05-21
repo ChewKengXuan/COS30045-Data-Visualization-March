@@ -1,0 +1,28 @@
+body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #eef6ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .frame {
+      background: white;
+      border: 2px solid #a0b2c7;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+      padding: 16px;
+      max-width: 900px;
+      width: 100%;
+    }
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .label {
+      font-size: 14px;
+      fill: #333;
+      font-weight: 600;
+    }
