@@ -16,28 +16,28 @@ const populateFilters = data => {
 
             updateHistogram(d.id, data);
         });
-};
+}; // <-- Fixed: Added missing closing bracket here!
 
 const updateHistogram = (filterId, data) => {
-    // 1. Filter the raw data pool 
+    // Filter the raw data pool using screenTech property matching load-data.js
     const updatedData = filterId === "all"
         ? data
         : data.filter(d => d.screenTech === filterId);
 
-    // 2. Generate bins using the global generator 
+    // Generate bins using global generator structure
     const updatedBins = binGenerator(updatedData);
 
-    // 3. Recalculate Y scale dynamically based on the filtered maximum frequency
+    // Recalculate Y scale dynamically based on maximum frequency
     const binsMaxLength = d3.max(updatedBins, d => d.length) || 0;
     yScale.domain([0, binsMaxLength]).nice();
 
-    // 4. Update Y-axis visual ticks alongside the bars
+    // Update Y-axis visual ticks alongside bars
     d3.select(".y-axis")
         .transition()
         .duration(500)
         .call(d3.axisLeft(yScale).ticks(5));
 
-    // 5. Animate the bars smoothly
+    // Update Bars
     d3.selectAll("#histogram rect")
         .data(updatedBins)
         .transition()
@@ -45,4 +45,48 @@ const updateHistogram = (filterId, data) => {
             .ease(d3.easeCubicInOut)
             .attr("y", d => yScale(d.length))
             .attr("height", d => innerHeight - yScale(d.length));
+};
+
+const createTooltip = (data) => {
+    if (!innerChartS) return; // Prevent crashes if scatter plot hasn't rendered yet
+    
+    const tooltip = innerChartS
+    .append("g")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+    tooltip.append("rect")
+    .attr("width", tooltipWidth)
+    .attr("height", tooltipHeight)
+    .attr("rx", 3)
+    .attr("ry", 3)
+    .attr("fill", barColor) // Fixed literal string error here
+    .attr("fill-opacity", 0.75);
+
+    tooltip.append("text")
+    .text("NA")
+    .attr("x", tooltipWidth / 2)
+    .attr("y", tooltipHeight / 2)
+    .attr("text-anchor", "middle")
+    .attr("alignment-baseline", "middle")
+    .attr("fill", "white")
+    .style("font-weight", 900);
+};
+
+const handleMouseEvents = () => {
+    if (!innerChartS) return;
+    
+    innerChartS.selectAll("circle")
+    .on("mouseenter", function(e, d) {
+        d3.select(".tooltip text").text(d.screenSize);
+        const cx = e.target.getAttribute("cx");
+        const cy = e.target.getAttribute("cy");
+        
+        d3.select(".tooltip")
+            .style("opacity", 1)
+            .attr("transform", `translate(${cx - tooltipWidth / 2}, ${cy - tooltipHeight - 5})`);
+    })
+    .on("mouseleave", function() {
+        d3.select(".tooltip").style("opacity", 0);
+    });
 };

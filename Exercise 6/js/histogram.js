@@ -14,6 +14,7 @@ const drawHistogram = data => {
     const maxEng = bins[bins.length - 1].x1;
     const binsMaxLength = d3.max(bins, d => d.length);
 
+    //Define scales
     xScale
     .domain([minEng, maxEng])
     .range([0, innerWidth]);
@@ -50,7 +51,7 @@ const drawHistogram = data => {
         .attr("text-anchor", "end")
         .attr("x", width  - 20)
         .attr("y", height - 5)
-        .attr("class", "axis-label");
+        .attr("class", "axis-label")
     //y-axis   
     const leftAxis = d3.axisLeft(yScale).ticks(5);
     innerchart

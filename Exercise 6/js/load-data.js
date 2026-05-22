@@ -7,9 +7,13 @@ d3.csv("data/Ex6_TVdata.csv", d => ({
     energyConsumption: +d.energyConsumption,
     star: +d.star
 })).then(data => { 
-    console.log(data); // You will now see actual data objects here!
+    console.log(data); 
     drawHistogram(data);
+    drawScatterPlot(data);
     populateFilters(data);
+
+    createTooltip(data);
+    handleMouseEvents(data);
 }).catch(error => { 
     console.error("Error loading the CSV file:", error);
 });
