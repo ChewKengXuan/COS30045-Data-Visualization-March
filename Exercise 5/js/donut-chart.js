@@ -11,7 +11,6 @@ const donutSvg = d3.select("#donutChart")
     .attr("transform", `translate(${donutWidth / 2}, ${donutHeight / 2})`);
 
 d3.csv("data/Ex5_TV_energy_Allsizes_byScreenType.csv").then(data => {
-    // Target exact string format key matching CSV header literal
     const valKey = "Mean(Labelled energy consumption (kWh/year))";
     data.forEach(d => d.value = +d[valKey]);
 
