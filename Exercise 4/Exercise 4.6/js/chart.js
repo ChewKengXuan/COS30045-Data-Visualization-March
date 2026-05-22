@@ -20,7 +20,6 @@ const createBarChart = data => {
     .data(data)
     .join("rect")
     .attr("class", d => `bar bar-${d.count}`)
-    // Position each bar vertically with some spacing
     .attr("x", 50)
     .attr("y", (d, i) => i * 35 + 50)
     .attr("width", d => xScale(d.count))
