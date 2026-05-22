@@ -3,13 +3,13 @@ body {
     font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #fffaf0; /* Using your bodyBackgroundColor constant */
-    color: #4a3c31; /* Soft charcoal for text */
+    background-color: #fffaf0;
+    color: #4a3c31; 
 }
 
 /* Banner header styling */
 header {
-    background-color: #d46a24; /* Solid rust/orange header banner */
+    background-color: #d46a24;
     padding: 20px 40px;
     margin-bottom: 30px;
 }
@@ -21,14 +21,12 @@ header h1 {
     font-weight: 700;
 }
 
-/* Main layout wrapper */
 main {
     max-width: 900px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* Headings and body copy */
 h1 {
     font-size: 36px;
     color: #4a3c31;
@@ -45,14 +43,13 @@ p {
     margin-bottom: 25px;
 }
 
-/* Target container for top filters wrapper */
+
 #filter_screen {
     margin-bottom: 25px;
 }
 
-/* Button styling matching the screenshot */
 button.filter {
-    background-color: #d46a24; /* Main theme color */
+    background-color: #d46a24;
     color: #ffffff;
     border: none;
     padding: 10px 24px;
@@ -65,18 +62,18 @@ button.filter {
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Active filter state styling */
+
 button.filter.active {
-    background-color: #f7ca84; /* Soft yellow/orange for selection */
-    color: #d46a24;            /* Inverts text to match the theme */
+    background-color: #f7ca84; 
+    color: #d46a24;            
 }
 
-/* Hover state for interactions */
+
 button.filter:hover:not(.active) {
     background-color: #b3561b;
 }
 
-/* Chart axis typography alignment */
+
 .axis-label {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;

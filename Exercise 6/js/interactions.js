@@ -16,22 +16,22 @@ const populateFilters = data => {
 
             updateHistogram(d.id, data);
         });
-}; // <-- Fixed: Added missing closing bracket here!
+};
 
 const updateHistogram = (filterId, data) => {
-    // Filter the raw data pool using screenTech property matching load-data.js
+    // Filter the raw data pool
     const updatedData = filterId === "all"
         ? data
         : data.filter(d => d.screenTech === filterId);
 
-    // Generate bins using global generator structure
+    // Generate bins
     const updatedBins = binGenerator(updatedData);
 
-    // Recalculate Y scale dynamically based on maximum frequency
+    // Recalculate Y scale
     const binsMaxLength = d3.max(updatedBins, d => d.length) || 0;
     yScale.domain([0, binsMaxLength]).nice();
 
-    // Update Y-axis visual ticks alongside bars
+    // Update Y-axis
     d3.select(".y-axis")
         .transition()
         .duration(500)
@@ -48,7 +48,6 @@ const updateHistogram = (filterId, data) => {
 };
 
 const createTooltip = (data) => {
-    if (!innerChartS) return; // Prevent crashes if scatter plot hasn't rendered yet
     
     const tooltip = innerChartS
     .append("g")
@@ -60,7 +59,7 @@ const createTooltip = (data) => {
     .attr("height", tooltipHeight)
     .attr("rx", 3)
     .attr("ry", 3)
-    .attr("fill", barColor) // Fixed literal string error here
+    .attr("fill", barColor)
     .attr("fill-opacity", 0.75);
 
     tooltip.append("text")

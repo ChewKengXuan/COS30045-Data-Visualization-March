@@ -16,7 +16,7 @@
 }
 
 button.filter, button.filter-size {
-    background-color: #d46a24; /* Orange background */
+    background-color: #d46a24;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -28,6 +28,6 @@ button.filter, button.filter-size {
 }
 
 button.filter.active, button.filter-size.active {
-    background-color: #f7ca84; /* Light orange for active state */
+    background-color: #f7ca84; 
     color: #d46a24;
 }
