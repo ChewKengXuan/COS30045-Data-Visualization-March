@@ -5,6 +5,7 @@ d3.csv("data/new data.csv", d => {
     count: +d["Count(SoldIn)"]
   };
 })
+
 .then(data => {
   console.log(data);
   console.log(data.length);
